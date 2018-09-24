@@ -102,6 +102,34 @@ update msg model =
 
 ---- VIEW ----
 
+viewTodo : Todo -> List Lavel -> Html Msg
+viewTodo todo lavelList=
+    li[][
+        text todo.title,
+        ul[style "list-style-type" "none"][
+            {-li[][ text t.content],
+            li[][text (String.fromInt t.priority)],-}
+            if todo.lavelId /= 0 then
+                li[style "display" "table-cell"][
+                    input[type_ "button", name "Prev", 
+                    value (withDefault "" (head (map (\l -> l.lavel) (filter (\l -> l.id == todo.lavelId - 1) lavelList)))), 
+                    onClick (TodoLevelDown todo.id)][]
+                ]
+            else
+                text ""
+            ,
+            if todo.lavelId /= (length lavelList) - 1 then 
+                li[style "display" "table-cell"][
+                    input[type_ "button" , name "Next", 
+                    value (withDefault "" (head (map (\l -> l.lavel) (filter (\l -> l.id == todo.lavelId + 1) lavelList)))),  
+                    onClick (TodoLevelUp todo.id)][]
+                ]
+            else
+                text ""
+        ]
+    ]
+                
+
 
 view : Model -> Html Msg
 view model =
@@ -114,30 +142,7 @@ view model =
             text m.lavel,
             ul [style "list-style-type" "none"](
                 map (\t -> 
-                    li[][
-                        text t.title,
-                        ul[style "list-style-type" "none"][
-                            {-li[][ text t.content],
-                            li[][text (String.fromInt t.priority)],-}
-                            if m.id /= 0 then
-                                li[style "display" "table-cell"][
-                                    input[type_ "button", name "Prev", 
-                                    value (withDefault "" (head (map (\l -> l.lavel) (filter (\l -> l.id == m.id - 1) model.lavelList)))), 
-                                    onClick (TodoLevelDown t.id)][]
-                                ]
-                            else
-                                a[][]
-                            ,
-                            if m.id /= (length model.lavelList) - 1 then 
-                                li[style "display" "table-cell"][
-                                    input[type_ "button" , name "Next", 
-                                    value (withDefault "" (head (map (\l -> l.lavel) (filter (\l -> l.id == m.id + 1) model.lavelList)))),  
-                                    onClick (TodoLevelUp t.id)][]
-                                ]
-                            else
-                                a[][]
-                        ]
-                    ]
+                    viewTodo t model.lavelList
                     )
                 (sortBy (\t -> t.priority) (filter (\t -> t.lavelId == m.id)model.todoList))
             )
