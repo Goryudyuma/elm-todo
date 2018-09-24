@@ -118,6 +118,11 @@ viewTodo todo lavelList=
             else
                 text ""
             ,
+            li[style "display" "table-cell"][
+                input[type_ "button", name "Delete", 
+                value "Delete", 
+                onClick (TodoDel todo.id)][]
+            ],
             if todo.lavelId /= (length lavelList) - 1 then 
                 li[style "display" "table-cell"][
                     input[type_ "button" , name "Next", 
