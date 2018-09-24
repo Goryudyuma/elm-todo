@@ -1,6 +1,6 @@
 # Elm Develop Environment
 
-[![CircleCI](https://circleci.com/gh/Goryudyuma/elm-todo.svg?style=svg)](https://circleci.com/gh/ababup1192/elm-dev-env)
+[![CircleCI](https://circleci.com/gh/Goryudyuma/elm-todo.svg?style=svg)](https://circleci.com/gh/Goryudyuma/elm-todo)
 ## Install
 
 ```shell
